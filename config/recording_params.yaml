@@ -1,0 +1,26 @@
+# Buffer Data Parameters
+snapshot_buffer:
+  default_duration_limit: 10        # Maximum time difference between newest and oldest message, seconds, overrides -d flag
+  default_memory_limit: 100         # (-1 = no limit) Maximum memory used by messages in each topic's buffer, MB, override -s flag
+  clear_buffer: true                # Option to clear buffer after writing to bag. override -n flag
+  trigger_topic: "trigger_snapshot" # topic to call to trigger snapshot
+  topics:
+    # EXAMPLE
+    # - /imu/data:          # Topic to add messages to buffer
+    #   duration: 3         # Override the default duration for a topic (-1 = infinite)
+    #   memory: 100.0       # Override the default memory limit
+      - /cmd_vel
+      - /joint_states
+      - /tf
+      - /tf_static
+
+
+# Preset lists of topics to write to bag
+snapshot_groups:
+  robot_state:
+    filename: "bag_"
+    topics:
+      - /cmd_vel
+      - /joint_states
+      - /tf
+      - /tf_static

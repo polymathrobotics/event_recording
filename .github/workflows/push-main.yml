@@ -1,0 +1,53 @@
+name: push-main
+env:
+  PACKAGE_NAME: event_recording
+on:
+  push:
+    branches: [ main ]
+  # Allows you to run this workflow manually from the Actions tab
+  workflow_dispatch:
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    container: polymathrobotics/farmonacci_base:noetic
+    steps:
+
+      - name: Clone the repository
+        uses: actions/checkout@v2
+        with:
+          path: catkin_ws/src/${{ env.PACKAGE_NAME }}
+
+      - name: Prime the workspace and install the package dependencies
+        shell: bash
+        working-directory: catkin_ws
+        run: |
+          catkin config --install --init --extend /opt/ros/noetic
+          catkin locate $PACKAGE_NAME
+          apt update
+          rosdep update
+          DEBIAN_FRONTEND=noninteractive rosdep install -i -y --from-path src
+
+      - name: Build the package
+        shell: bash
+        working-directory: catkin_ws
+        run: |
+          catkin build $PACKAGE_NAME
+
+      - name: Test the package
+        shell: bash
+        working-directory: catkin_ws
+        run: |
+          catkin test $PACKAGE_NAME
+        continue-on-error: true
+
+      - uses: actions/upload-artifact@v3
+        with:
+          name: test-results
+          path: catkin_ws/build/${{ env.PACKAGE_NAME }}/test_results
+
+      - name: Return test results
+        shell: bash
+        working-directory: catkin_ws
+        run: |
+          source /opt/ros/noetic/setup.bash
+          catkin_test_results

@@ -1,0 +1,9 @@
+<launch>
+  <!-- parameters for topics added to the buffer are all in a
+       rosparam in config/recording_params.yaml -->
+  <!-- to begin writing to bag, call the action server or rosservice -->
+  <!-- adapted from https://github.com/ros/rosbag_snapshot -->
+  <rosparam file="$(find event_recording)/config/recording_params.yaml" command="load" />
+  <node name="snapshot_buffer" pkg="rosbag_snapshot" type="snapshot" args="" output="screen" />
+  <node name="snapshot_trigger" pkg="event_recording" type="snapshot_trigger_node" output="screen" />
+</launch>

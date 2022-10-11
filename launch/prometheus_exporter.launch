@@ -1,0 +1,7 @@
+<launch>
+    <node name="prometheus_exporter" pkg="event_recording" type="prometheus_exporter.py" output="screen">
+        <remap from="/input_vel" to="/cmd_vel" />
+        <remap from="/mouse_vel" to="/user/cmd_vel" />
+        <remap from="/joy_vel" to="/joystick/cmd_vel" />
+    </node>
+</launch>

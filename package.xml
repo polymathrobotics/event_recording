@@ -1,0 +1,24 @@
+<?xml version="1.0"?>
+<package format="2">
+  <name>event_recording</name>
+  <version>0.0.1</version>
+  <description>Rosbag recording and metrics</description>
+
+  <maintainer email="david@polymathrobotics.com">David Tarazi</maintainer>
+  <author email="david@polymathrobotics.com">David Tarazi</author>
+  <license>Apache 2.0</license>
+
+  <buildtool_depend>catkin</buildtool_depend>
+  <depend>roscpp</depend>
+  <depend>rospy</depend>
+  <depend>std_msgs</depend>
+  <depend>geometry_msgs</depend>
+  <depend>rosbag_snapshot</depend>
+  <depend>rosbag_snapshot_msgs</depend>
+  <depend>python3-prometheus-client</depend>
+  <depend>python3-numpy</depend>
+
+  <export>
+  </export>
+
+</package>
